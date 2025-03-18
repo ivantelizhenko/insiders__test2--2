@@ -9,10 +9,10 @@ import {
   Action,
   EventStatus,
   FormStatus,
-  ScheduleContextValue,
   ScheduleState,
+  ScheduleContextValue,
 } from './ScheduleContextType';
-import { fetchEvents } from '../services/firestoreOperations';
+import { fetchEvents } from '../../firebase/firestoreOperations';
 
 const ScheduleContext = createContext<ScheduleContextValue | null>(null);
 

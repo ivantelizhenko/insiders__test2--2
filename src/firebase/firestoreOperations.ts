@@ -7,8 +7,8 @@ import {
   UpdateData,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from '../firebase';
-import { Event } from '../store/ScheduleContextType';
+import { db } from './firebase';
+import { Event } from '../store/scheduleContext/ScheduleContextType';
 
 type FetchedEvents = {
   title: string;

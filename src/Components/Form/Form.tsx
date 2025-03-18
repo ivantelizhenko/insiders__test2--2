@@ -1,18 +1,21 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 
+import {
+  Event,
+  FormStatus,
+} from '../../store/scheduleContext/ScheduleContextType';
+import { useSchedule } from '../../store/scheduleContext/ScheduleContext';
+import {
+  addNewEvent,
+  updateEventById,
+} from '../../firebase/firestoreOperations';
+
 import Input from './Input';
 import Select from './Select';
 import Textarea from './Textarea';
 import Button from '../Button';
 import StyledForm from './StyledForm';
-
-import { Event, FormStatus } from '../../store/ScheduleContextType';
-import { useSchedule } from '../../store/ScheduleContext';
-import {
-  addNewEvent,
-  updateEventById,
-} from '../../services/firestoreOperations';
 
 function Form() {
   const { register, handleSubmit, reset, setValue } = useForm<Event>();

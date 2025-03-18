@@ -1,8 +1,8 @@
-import { useSchedule } from '../store/ScheduleContext';
+import { deleteEventById } from '../firebase/firestoreOperations';
+import { useSchedule } from '../store/scheduleContext/ScheduleContext';
+
 import Button from './Button';
 import Container from './Container';
-import '../services/firestoreOperations';
-import { deleteEventById } from '../services/firestoreOperations';
 
 function List() {
   const { events, removeEvent, setEditedEvent } = useSchedule();
