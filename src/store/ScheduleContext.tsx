@@ -1,51 +1,35 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 import {
   Action,
+  EventStatus,
   FormStatus,
   ScheduleContextValue,
   ScheduleState,
-  Status,
 } from './ScheduleContextType';
+import { fetchEvents } from '../services/firestoreOperations';
 
 const ScheduleContext = createContext<ScheduleContextValue | null>(null);
 
 const initialState: ScheduleState = {
-  events: [
-    {
-      title: 'title1',
-      description: 'description1',
-      date: '2022-09-09',
-      status: Status.Casual,
-      id: 'fhgdfsf',
-    },
-    {
-      title: 'title2',
-      description: 'description2',
-      date: '1939-09-01',
-      status: Status.Casual,
-      id: 'erekkd',
-    },
-    {
-      title: 'title3',
-      description: 'description3',
-      date: '1945-05-05',
-      status: Status.Casual,
-      id: '1923jdjdf',
-    },
-    {
-      title: 'title4',
-      description: 'description4',
-      date: '2022-02-24',
-      status: Status.Casual,
-      id: 'slshjhnt',
-    },
-  ],
+  events: [],
   editedEvent: null,
   formStatus: FormStatus.Add,
 };
 
 function booksReducer(state: ScheduleState, action: Action): ScheduleState {
   switch (action.type) {
+    case 'events/load': {
+      return {
+        ...state,
+        events: action.payload,
+      };
+    }
     case 'event/add': {
       return {
         ...state,
@@ -87,6 +71,18 @@ function booksReducer(state: ScheduleState, action: Action): ScheduleState {
 
 function ScheduleProvider({ children }: { children: ReactNode }) {
   const [scheduleState, dispatch] = useReducer(booksReducer, initialState);
+
+  useEffect(() => {
+    async function get() {
+      const data = await fetchEvents();
+      const newData = data!.map(event => ({
+        ...event,
+        status: EventStatus[event.status as EventStatus],
+      }));
+      dispatch({ type: 'events/load', payload: newData });
+    }
+    get();
+  }, []);
 
   const ctx: ScheduleContextValue = {
     ...scheduleState,

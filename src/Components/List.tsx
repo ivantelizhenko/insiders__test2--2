@@ -1,6 +1,7 @@
 import { useSchedule } from '../store/ScheduleContext';
 import Button from './Button';
 import Container from './Container';
+import '../services/firestoreOperations';
 
 function List() {
   const { events, removeEvent, setEditedEvent } = useSchedule();

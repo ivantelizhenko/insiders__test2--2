@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 import Input from './Input';
 import Select from './Select';
@@ -8,7 +9,6 @@ import StyledForm from './StyledForm';
 
 import { Event, FormStatus } from '../../store/ScheduleContextType';
 import { useSchedule } from '../../store/ScheduleContext';
-import { useEffect } from 'react';
 
 function Form() {
   const { register, handleSubmit, reset, setValue } = useForm<Event>();

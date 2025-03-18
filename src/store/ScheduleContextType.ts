@@ -1,4 +1,4 @@
-export enum Status {
+export enum EventStatus {
   Casual = 'Casual',
   Important = 'Important',
   Crucial = 'Crucial',
@@ -13,7 +13,7 @@ export interface Event {
   title: string;
   description: string;
   date: string;
-  status: Status;
+  status: EventStatus;
   id: string;
 }
 
@@ -29,6 +29,11 @@ export type ScheduleContextValue = ScheduleState & {
   setEditedEvent: (id: string) => void;
   saveEditedEvent: (newEvents: Event) => void;
 };
+
+interface LoadEventsAction {
+  type: 'events/load';
+  payload: Event[];
+}
 
 interface AddEventAction {
   type: 'event/add';
@@ -51,4 +56,5 @@ export type Action =
   | AddEventAction
   | removeEventAction
   | setEditedEventAction
-  | saveEditedEventAction;
+  | saveEditedEventAction
+  | LoadEventsAction;
