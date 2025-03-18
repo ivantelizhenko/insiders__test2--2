@@ -41,7 +41,7 @@ export async function updateEventById(updatedEvent: Event) {
   try {
     const docRef = doc(db, 'events', updatedEvent.id);
     await updateDoc(docRef, updatedEvent as UpdateData<Event>);
-    console.log(`Документ з ID ${docRef.id} успішно оновлено.`);
+    console.log(`Event успішно оновлено.`);
   } catch (error) {
     console.error('Помилка при оновленні документа:', error);
   }
@@ -50,8 +50,8 @@ export async function updateEventById(updatedEvent: Event) {
 export async function addNewEvent(newEvent: Event) {
   try {
     const eventsCollection = collection(db, 'events');
-    const docRef = await addDoc(eventsCollection, newEvent);
-    console.log('Новий документ додано з ID:', docRef.id);
+    await addDoc(eventsCollection, newEvent);
+    console.log('Новий event додано');
   } catch (error) {
     console.error('Помилка при додаванні документа:', error);
   }
@@ -60,9 +60,8 @@ export async function addNewEvent(newEvent: Event) {
 export async function deleteEventById(id: string) {
   try {
     const docRef = doc(db, 'events', id);
-    console.log(id);
     await deleteDoc(docRef);
-    console.log(`Документ з ID ${id} успішно видалено.`);
+    console.log(`Event успішно видалено.`);
   } catch (error) {
     console.error('Помилка при видаленні документа:', error);
   }
@@ -77,7 +76,7 @@ export async function loginUser(email: string, password: string) {
     );
     // Вхід успішний
     const user = userCredential.user;
-    console.log('Користувач увійшов:', user);
+    console.log('Користувач увійшов');
     return user;
   } catch (error) {
     console.error('Помилка входу:', error);
@@ -92,7 +91,7 @@ export async function registerUser(email: string, password: string) {
       password
     );
     const user = userCredential.user;
-    console.log('Користувач успішно зареєстрований:', user);
+    console.log('Користувач успішно зареєстрований');
     return user;
   } catch (error) {
     console.error('Помилка реєстрації:', error);
