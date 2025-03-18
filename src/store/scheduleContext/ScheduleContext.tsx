@@ -20,6 +20,7 @@ const initialState: ScheduleState = {
   events: [],
   editedEvent: null,
   formStatus: FormStatus.Add,
+  isAuth: false,
 };
 
 function booksReducer(state: ScheduleState, action: Action): ScheduleState {
@@ -64,6 +65,18 @@ function booksReducer(state: ScheduleState, action: Action): ScheduleState {
         formStatus: FormStatus.Add,
       };
     }
+    case 'auth/setTrue': {
+      return {
+        ...state,
+        isAuth: true,
+      };
+    }
+    case 'auth/setFalse': {
+      return {
+        ...state,
+        isAuth: false,
+      };
+    }
     default:
       throw new Error('Unknown action type');
   }
@@ -82,7 +95,7 @@ function ScheduleProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'events/load', payload: newData });
     }
     get();
-  }, [scheduleState.events]);
+  }, [scheduleState.events, scheduleState.isAuth]);
 
   const ctx: ScheduleContextValue = {
     ...scheduleState,
@@ -97,6 +110,12 @@ function ScheduleProvider({ children }: { children: ReactNode }) {
     },
     saveEditedEvent(newEditedEvent) {
       dispatch({ type: 'editedEvent/save', payload: newEditedEvent });
+    },
+    setAuthTrue() {
+      dispatch({ type: 'auth/setTrue' });
+    },
+    setAuthFalse() {
+      dispatch({ type: 'auth/setFalse' });
     },
   };
 

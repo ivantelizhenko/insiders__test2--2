@@ -21,6 +21,7 @@ export interface ScheduleState {
   events: Event[];
   editedEvent: Event | null;
   formStatus: FormStatus;
+  isAuth: boolean;
 }
 
 export type ScheduleContextValue = ScheduleState & {
@@ -28,6 +29,8 @@ export type ScheduleContextValue = ScheduleState & {
   removeEvent: (id: string) => void;
   setEditedEvent: (id: string) => void;
   saveEditedEvent: (newEvents: Event) => void;
+  setAuthTrue: () => void;
+  setAuthFalse: () => void;
 };
 
 interface LoadEventsAction {
@@ -52,9 +55,18 @@ interface saveEditedEventAction {
   payload: Event;
 }
 
+interface setAuthTrueAction {
+  type: 'auth/setTrue';
+}
+interface setAuthFalseAction {
+  type: 'auth/setFalse';
+}
+
 export type Action =
   | AddEventAction
   | removeEventAction
   | setEditedEventAction
   | saveEditedEventAction
-  | LoadEventsAction;
+  | LoadEventsAction
+  | setAuthTrueAction
+  | setAuthFalseAction;

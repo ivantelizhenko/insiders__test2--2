@@ -7,7 +7,11 @@ import {
   UpdateData,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { auth, db } from './firebase';
 import { Event } from '../store/scheduleContext/ScheduleContextType';
 
 type FetchedEvents = {
@@ -61,5 +65,37 @@ export async function deleteEventById(id: string) {
     console.log(`Документ з ID ${id} успішно видалено.`);
   } catch (error) {
     console.error('Помилка при видаленні документа:', error);
+  }
+}
+
+export async function loginUser(email: string, password: string) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // Вхід успішний
+    const user = userCredential.user;
+    console.log('Користувач увійшов:', user);
+    return user;
+  } catch (error) {
+    console.error('Помилка входу:', error);
+  }
+}
+
+export async function registerUser(email: string, password: string) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    console.log('Користувач успішно зареєстрований:', user);
+    return user;
+  } catch (error) {
+    console.error('Помилка реєстрації:', error);
+    // Обробка помилки реєстрації
   }
 }
