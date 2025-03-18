@@ -1,14 +1,16 @@
+import { ScheduleProvider } from './store/scheduleContext/ScheduleContext';
 import AppContainer from './Components/AppContainer';
 import Form from './Components/Form/Form';
 import List from './Components/List';
-import { ScheduleProvider } from './store/scheduleContext/ScheduleContext';
+import Login from './Components/Login';
 
 function App() {
   return (
     <ScheduleProvider>
       <AppContainer>
-        <Form />
-        <List />
+        <Login />
+        {/* <Form />
+        <List /> */}
       </AppContainer>
     </ScheduleProvider>
   );
