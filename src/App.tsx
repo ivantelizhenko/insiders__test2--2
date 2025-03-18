@@ -1,11 +1,14 @@
 import AppContainer from './Components/AppContainer';
 import Form from './Components/Form/Form';
+import { ScheduleProvider } from './store/ScheduleContext';
 
 function App() {
   return (
-    <AppContainer>
-      <Form />
-    </AppContainer>
+    <ScheduleProvider>
+      <AppContainer>
+        <Form />
+      </AppContainer>
+    </ScheduleProvider>
   );
 }
 

@@ -1,28 +1,21 @@
 import { useForm } from 'react-hook-form';
+
 import Input from './Input';
 import Select from './Select';
 import Textarea from './Textarea';
-import Button from './Button';
+import Button from '../Button';
 import StyledForm from './StyledForm';
 
-enum Status {
-  Casual,
-  Important,
-  Crucial,
-}
-
-interface Inputs {
-  title: string;
-  description: string;
-  date: string;
-  status: Status;
-}
+import { Event } from '../../store/ScheduleContextType';
+import { useSchedule } from '../../store/ScheduleContext';
 
 function Form() {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<Event>();
+  const { addEvent } = useSchedule();
 
-  function onSubmit(data: Inputs): void {
-    console.log(data);
+  function onSubmit(data: Event): void {
+    addEvent({ ...data, id: Math.random().toString() });
+    reset();
   }
 
   return (
