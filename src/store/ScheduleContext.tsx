@@ -82,7 +82,7 @@ function ScheduleProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'events/load', payload: newData });
     }
     get();
-  }, []);
+  }, [scheduleState.events]);
 
   const ctx: ScheduleContextValue = {
     ...scheduleState,

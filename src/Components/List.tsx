@@ -2,12 +2,14 @@ import { useSchedule } from '../store/ScheduleContext';
 import Button from './Button';
 import Container from './Container';
 import '../services/firestoreOperations';
+import { deleteEventById } from '../services/firestoreOperations';
 
 function List() {
   const { events, removeEvent, setEditedEvent } = useSchedule();
 
   function handleRemove(id: string) {
     removeEvent(id);
+    deleteEventById(id);
   }
 
   function handleEdit(id: string) {

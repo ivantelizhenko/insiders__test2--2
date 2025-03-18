@@ -9,6 +9,10 @@ import StyledForm from './StyledForm';
 
 import { Event, FormStatus } from '../../store/ScheduleContextType';
 import { useSchedule } from '../../store/ScheduleContext';
+import {
+  addNewEvent,
+  updateEventById,
+} from '../../services/firestoreOperations';
 
 function Form() {
   const { register, handleSubmit, reset, setValue } = useForm<Event>();
@@ -27,10 +31,13 @@ function Form() {
 
   function onSubmit(data: Event): void {
     if (formStatus === FormStatus.Add) {
-      addEvent({ ...data, id: Math.random().toString() });
+      addEvent(data);
+      addNewEvent(data);
     }
     if (formStatus === FormStatus.Edit) {
-      saveEditedEvent({ ...data, id: editedEvent!.id });
+      const result = { ...data, id: editedEvent!.id };
+      saveEditedEvent(result);
+      updateEventById(result);
     }
 
     reset();
