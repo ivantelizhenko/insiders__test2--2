@@ -1,4 +1,17 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui" {
   themes: false;
+}
+
+@layer base {
+  html {
+    @apply h-full text-[62.5%];
+  }
+  body {
+    @apply h-full bg-red-200 text-[1.6rem];
+  }
+
+  #root {
+    @apply h-full;
+  }
 }
