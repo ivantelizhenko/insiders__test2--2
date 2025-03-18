@@ -6,15 +6,33 @@ import Textarea from './Textarea';
 import Button from '../Button';
 import StyledForm from './StyledForm';
 
-import { Event } from '../../store/ScheduleContextType';
+import { Event, FormStatus } from '../../store/ScheduleContextType';
 import { useSchedule } from '../../store/ScheduleContext';
+import { useEffect } from 'react';
 
 function Form() {
-  const { register, handleSubmit, reset } = useForm<Event>();
-  const { addEvent } = useSchedule();
+  const { register, handleSubmit, reset, setValue } = useForm<Event>();
+  const { addEvent, editedEvent, formStatus, saveEditedEvent } = useSchedule();
+
+  useEffect(() => {
+    if (editedEvent) {
+      const { title, description, date, status } = editedEvent;
+
+      setValue('title', title);
+      setValue('description', description);
+      setValue('date', date);
+      setValue('status', status);
+    }
+  }, [editedEvent, setValue]);
 
   function onSubmit(data: Event): void {
-    addEvent({ ...data, id: Math.random().toString() });
+    if (formStatus === FormStatus.Add) {
+      addEvent({ ...data, id: Math.random().toString() });
+    }
+    if (formStatus === FormStatus.Edit) {
+      saveEditedEvent({ ...data, id: editedEvent!.id });
+    }
+
     reset();
   }
 
@@ -23,11 +41,11 @@ function Form() {
       <Input
         type="text"
         placeholder="Title"
-        {...(register('title'), { required: true })}
+        {...register('title', { required: true })}
       />
       <Textarea
         placeholder="Description"
-        {...(register('description'), { required: true })}
+        {...register('description', { required: true })}
       />
       <Input type="date" {...register('date', { required: true })} />
       <Select
@@ -35,7 +53,7 @@ function Form() {
         {...register('status')}
       />
       <Button type="submit" className="w-full">
-        Submit
+        {editedEvent?.title ? 'Edit' : 'Add'}
       </Button>
     </StyledForm>
   );
